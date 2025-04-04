@@ -1,0 +1,16 @@
+Bootstrap: docker
+From: continuumio/anaconda3
+
+%post
+    apt-get update && apt-get install -y default-jdk
+    conda install -y python=3.9 pyspark numpy pandas scikit-learn
+    conda clean -afy
+
+%environment
+    export JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64
+    export PATH=$JAVA_HOME/bin:$PATH
+
+%runscript
+    echo "PySpark environment is ready!"
+    exec /bin/bash "$@"
+
